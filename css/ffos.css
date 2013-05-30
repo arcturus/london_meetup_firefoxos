@@ -1,0 +1,22 @@
+/***** Fox Animation *****/
+#foxtail {
+  background: url(../img/foxtail.png) 0 0 no-repeat;
+  width: 156px;
+  height: 156px;
+  animation: animate-tail 3.75s steps(44) infinite;
+  -webkit-animation: animate-tail 3.75s steps(44) infinite;
+  display: inline-block; }
+
+@-webkit-keyframes animate-tail {
+  from {
+    background-position: -6864px 0; }
+
+  to {
+    background-position: 0 0; } }
+
+@keyframes animate-tail {
+  from {
+    background-position: -6864px 0; }
+
+  to {
+    background-position: 0 0; } }

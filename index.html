@@ -48,7 +48,9 @@
         <section>
           <h2>Welcome</h2>
           <p><a href="http://www.meetup.com/FirefoxOS/events/111281442/">London FirefoxOS meetup group</a></p>
-          <p>slides at</p>
+          <p>Follow the slides</p>
+          <p><a href="http://bit.ly/11aUZml">http://bit.ly/11aUZml</a></p>
+          <p>Contact me!</p>
           <p><a href="http://www.twitter.com/mepartoconmigo">@mepartoconmigo</a></p>
         </section>
 
@@ -81,30 +83,41 @@
 
         <section>
           <section>
-            <h3>Using a Web Activity</h3>
-            <p>Poner la tabla de activites</p>
-            <p>Format MozActivity</p>
-            <p>https://wiki.mozilla.org/WebAPI/WebActivities</p>
-            <p>name: pick, share, new, view</p>
-            <p>data: we could define the type of data supported 'type' or add the parameters necessary to launch the activity</p>
-            <p>DOMRequest onsuccess onerror</p>
-            <p>If we expect a result it will come in the DOMRequest response</p>
+            <h3>Web Activitys</h3>
+            <p>Leverage some work to other apps!</p>
+            <p>Use them to execute tasks that other apps know how to do better than you</b>
           </section>
 
           <section>
-            <h3>Defining a Web Activity</h3>
-            <p>name</p>
-            <p>href endpoint that will be called</p>
-            <p>disposition: inline or window</p>
-            <p>returnValue postError postResult</p>
-            <p>filters: match the data when we call this activity</p>
-            <p>Receive a message when the activity is invoked navigator.setMessageHandler</p>
+            <h3>Pretty simple format</h3>
+            <p class="fragment">verb</p>
+            <p class="fragment">filter (optional)</p>
+            <p class="fragment">parameters (optional)</p>
+            <p class="fragment">
+              <p></p>
+              <p class="fragment">BOOM!</p>
+              <p class="fragment"><a href="https://wiki.mozilla.org/WebAPI/WebActivities">full and better definition</a></p>
+            </p>
+            <p class="fragment"><a href="https://wiki.mozilla.org/Gaia/System/Activities?title=Gaia/System/Activities">already integrated in Gaia</a></p>
+          </section>
+
+          <section>
+            <h3>Hands on code!</h3>
+            <p>Let's take a look to an example application</p>
+            <p><a href="https://github.com/arcturus/firefox-os-webactivities">https://github.com/arcturus/firefox-os-webactivities</a></p>
           </section>
         </section>
 
         <section>
+
           <section>
             <h3>Desktop Notifications</h3>
+            <img src="img/firefox-os-notifications.jpg"></img>
+            <p><sub>... something weird in this notifications ...</sub></p>
+          </section>
+
+          <section>
+            <h3>How we do use them?</h3>
             <p><a href="https://developer.mozilla.org/en-US/docs/Web/API/navigator.mozNotification?redirectlocale=en-US&redirectslug=DOM%2Fnavigator.mozNotification">Pretty simple API</a></p>
             <pre>
               <code>
@@ -138,10 +151,109 @@
           </section>
 
           <section>
+            <h3>And again a system message to wake us up</h3>
+            <pre>
+              <code>
+        window.navigator.mozSetMessageHandler('notification', 
+           function onNotification(notification) {
+              ...
+           });
+        });
+              </code>
+            </pre>
+          </section>
+
+          <section>
             <h3>Example</h3>
             <p>
               <a href="https://github.com/arcturus/firefox-os-notifications ">https://github.com/arcturus/firefox-os-notifications</a>
             </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>Push Notifications</h3>
+            <p>Ready for version 1.1</p>
+            <p class="fragment">But we can start playing with them!</p>
+            <p class="fragment"><a href="https://developer.mozilla.org/en-US/docs/WebAPI/Simple_Push">https://developer.mozilla.org/en-US/docs/WebAPI/Simple_Push</a></p>
+          </section>
+
+          <section>
+            <h3>Simple Push API</h3>
+            <p>First draft available: <a href="https://developer.mozilla.org/en-US/docs/WebAPI/Simple_Push">https://developer.mozilla.org/en-US/docs/WebAPI/Simple_Push</a></p>
+            <p>Named like that because:</p>
+            <p class="fragment">It's Simple</p>
+            <p class="fragment">It does Push</p>
+            <p class="fragment">... and it's and API</p>
+          </section>
+
+          <section>
+            <h3>Pretty easy to use</h3>
+            <p>Register to receive notifications</p>
+            <pre>
+              <code>
+       var req = navigator.push.register();
+  
+      req.onsuccess = function(e) {
+        var endpoint = req.result;
+        console.log("New endpoint: " + endpoint );
+      }
+
+      req.onerror = function(e) {
+        console.log("Error getting a new endpoint: " + JSON.stringify(e));
+      }
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h3>Pretty easy to use</h3>
+            <p>Listen to system messages</p>
+            <pre>
+              <code>
+      window.navigator.mozSetMessageHandler('push', function(e) {
+        console.log('My endpoint is ' + e.pushEndpoint);
+        console.log('My new version is ' +  e.version);
+      });
+              </code>
+            </pre>
+          </section>
+
+
+          <section>
+            <h3>Pretty easy to use</h3>
+            <p>You will require some permissions and system message definitions in your manifest</p>
+            <pre>
+              <code>
+                      "messages": [
+                         { "push": "/index.html" }
+                      ],
+                      "permissions": {
+                        "push": {}
+                      }
+              </code>
+            </pre>
+          </section>
+
+          <section>
+            <h3>Take a look to the example</h3>
+            <a href="https://github.com/arcturus/firefox-os-simplepush">https://github.com/arcturus/firefox-os-simplepush
+            <img src="img/pns_example.png"/>
+            </a>
+          </section>
+
+          <section>
+            <h3>Thank you so much!</h3>
+            <p>Folow me: @mepartoconmigo</p>
+            <p>Get the slides</p>
+            <p><a href="http://bit.ly/10DauqD">http://bit.ly/10DauqD</a></p>
+            <p>Get the examples</p>
+            <p><a href="https://github.com/arcturus/firefox-os-webactivities">https://github.com/arcturus/firefox-os-webactivities</a></p>
+            <p>
+              <a href="https://github.com/arcturus/firefox-os-notifications ">https://github.com/arcturus/firefox-os-notifications</a>
+            </p>
+            <p><a href="https://github.com/arcturus/firefox-os-simplepush">https://github.com/arcturus/firefox-os-simplepush</a></p>
           </section>
         </section>
 
